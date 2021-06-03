@@ -15,6 +15,7 @@ export default makeStyles(() => ({
   },
   cardContent: {
     display: 'flex',
+    flexFlow: 'column nowrap',
     justifyContent: 'space-between',
   },
 }));

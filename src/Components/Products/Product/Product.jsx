@@ -3,7 +3,7 @@ import {Card, CardMedia, CardContent, CardActions, Typography, IconButton} from 
 import {AddShoppingCart} from '@material-ui/icons';
 import useStyles from './styles';
 
-const Product = ({product}) => {
+const Product = ({product, onAddToCart}) => {
 
     const classes = useStyles();
 
@@ -12,19 +12,18 @@ const Product = ({product}) => {
             <CardMedia className={classes.media} title={product.name} image={product.media.source}/>
 
             <CardContent>
-                <div className={classes.cardContent}>
-                    <Typography variant='h5' gutterBottom>
+                    <Typography variant='h5' gutterBottom noWrap>
                         {product.name}
                     </Typography>
-                    <Typography variant='h5'>
+                    <Typography variant='body2' align='right' color='textSecondary' 
+                                noWrap='true' dangerouslySetInnerHTML={{__html: product.description}}/>
+                    <Typography variant='h5' align='right' color='secondary'>
                         {product.price.formatted_with_symbol}
                     </Typography>
-                </div>
-                <Typography variant='body2' align='right' color='textSecondary' noWrap='true' dangerouslySetInnerHTML={{__html: product.description}}/>
             </CardContent>
 
             <CardActions disableSpacing className={classes.cardActions}>
-                <IconButton aria-label='add to shopping cart'>
+                <IconButton aria-label='add to shopping cart' onClick={()=>onAddToCart(product.id,1)}>
                     <AddShoppingCart/>
                 </IconButton>
             </CardActions>
