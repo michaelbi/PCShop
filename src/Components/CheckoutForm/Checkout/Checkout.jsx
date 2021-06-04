@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {Paper, Stepper, Step, StepLabel,Typography,Button,CircularProgress,Divider} from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
+import {Paper, Stepper, Step, StepLabel,Typography} from '@material-ui/core';
 import useStyles from './styles';
 import AddressForm from '../AddressForm';
 import PaymentForm from '../PaymentForm';
+import {commerce} from '../../../lib/commerce';
 
 const steps = ['Shipping Address', 'Payment details'];
 
@@ -13,13 +14,41 @@ const Confirmation = ()=> (
 )
 
 
-const Checkout = () => {
+const Checkout = ({cart}) => {
 
     const [activeStep, setActivestep] = useState(0);
+    const [checkoutToken, setCheckoutToken] = useState('');
+    const [shippingData, setShippingData] = useState({});
     const classes = useStyles();
 
+    useEffect(() => {
+        if (cart.id) {
+          const generateToken = async () => {
+            try {
+              const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+    
+              setCheckoutToken(token);
+            } catch {
+              
+            }
+          };
+    
+          generateToken();
+        }
+      }, [cart]);
+
+      const next = (data)=>{
+        setShippingData(data);
+
+        nextStep();
+    }
+
+    const nextStep = ()=>{setActivestep( (prev) => prev + 1)}
+    const backStep = ()=>{setActivestep( (prev) => prev - 1)}
+
     const Form = ()=>(
-        activeStep ===0 ? <AddressForm/>:<PaymentForm/>
+        activeStep ===0 ? <AddressForm checkoutToken={checkoutToken} next={next}/>:
+                          <PaymentForm setShippingData={setShippingData} checkoutToken={checkoutToken} back={backStep}/>
     )
 
     return (
@@ -36,7 +65,7 @@ const Checkout = () => {
                         </Step>
                     ))}
                 </Stepper>
-                {activeStep === steps.length? <Confirmation/>:<Form/>}
+                {activeStep === steps.length? <Confirmation/>: checkoutToken && <Form/>}
             </Paper>
         </div>
             

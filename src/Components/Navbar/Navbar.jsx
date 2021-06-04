@@ -1,9 +1,9 @@
 import React from 'react';
-import {AppBar, Toolbar, IconButton, Badge, Menu, MenuItem, Typography} from '@material-ui/core';
+import {AppBar, Toolbar, IconButton, Badge, Typography} from '@material-ui/core';
 import {ShoppingCart} from '@material-ui/icons';
 import useStyles from './styles';
 import logo from '../../assets/logo.png';
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Navbar = ({totalItems}) => {
 
