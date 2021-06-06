@@ -1,17 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Paper, Stepper, Step, StepLabel,Typography} from '@material-ui/core';
+import {Paper, Stepper, Step, StepLabel,Typography, Divider, CircularProgress, Button, CssBaseline} from '@material-ui/core';
+import {Link, useHistory} from 'react-router-dom';
 import useStyles from './styles';
 import AddressForm from '../AddressForm';
 import PaymentForm from '../PaymentForm';
 import {commerce} from '../../../lib/commerce';
-
-const steps = ['Shipping Address', 'Payment details'];
-
-const Confirmation = ()=> (
-    <div>
-        Confirmation
-    </div>
-)
 
 
 const Checkout = ({cart, order, onCaptureCheckout, error}) => {
@@ -20,6 +13,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     const [checkoutToken, setCheckoutToken] = useState('');
     const [shippingData, setShippingData] = useState({});
     const classes = useStyles();
+    const history = useHistory();
 
     useEffect(() => {
         if (cart.id) {
@@ -28,8 +22,8 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
               const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
     
               setCheckoutToken(token);
-            } catch {
-              
+            } catch (error){
+              history.pushState('/');
             }
           };
     
@@ -57,8 +51,39 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
                           />
     )
 
+    const steps = ['Shipping Address', 'Payment details'];
+
+let Confirmation = ()=> order.customer ?(
+    <>
+        <div>
+            <Typography variant='h6'>Thank You For Your Purchase {order.customer.firstname} {order.customer.lastname}</Typography>
+            <Divider className={classes.divider}/>
+            <Typography variant='subtitle2'>Order ref: {order.customer_reference}</Typography>
+        </div>
+        <br/>
+        <Button component={Link} to='/' variant='outlined' type='button'>Continue Shopping</Button>
+    </>
+):
+(
+    <div className={classes.spinner}>
+            <CircularProgress/>
+        </div>
+)
+
+if(error)
+{
+    Confirmation = ()=>(
+        <>
+            <Typography variant='h5'>Error: {error}</Typography>
+            <br/>
+            <Button component={Link} to='/' variant='outlined' type='button'>Continue Shopping</Button>
+        </>
+    )
+}
+
     return (
         <>
+        <CssBaseline/>
         <div className={classes.toolbar}/>
         <div className={classes.layout}>
             <Paper className={classes.paper}>

@@ -24,7 +24,7 @@ const PaymentForm = ({shippingData, checkoutToken, back, onCaptureCheckout, next
             const orderData = {
                 line_items: checkoutToken.live.line_items,
                 customer: {
-                    fisrtname: shippingData.firstName,
+                    firstname: shippingData.firstName,
                     lastname: shippingData.lastName,
                     email: shippingData.email
                 },
