@@ -15,6 +15,8 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     const classes = useStyles();
     const history = useHistory();
 
+    console.log(cart);
+
     useEffect(() => {
         if (cart.id) {
           const generateToken = async () => {
@@ -23,7 +25,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     
               setCheckoutToken(token);
             } catch (error){
-              history.pushState('/');
+              history.push('/');
             }
           };
     

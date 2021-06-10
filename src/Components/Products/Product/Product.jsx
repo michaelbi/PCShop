@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {Card, CardMedia, CardContent, CardActions, Typography, IconButton} from '@material-ui/core';
 import {AddShoppingCart} from '@material-ui/icons';
 import useStyles from './styles';
@@ -12,11 +13,11 @@ const Product = ({product, onAddToCart}) => {
             <CardMedia className={classes.media} title={product.name} image={product.media.source}/>
 
             <CardContent>
-                    <Typography variant='h5' gutterBottom noWrap>
+                    <Typography className={classes.typoLink} variant='h5' gutterBottom noWrap component={Link} to={`/p/${product.id}`}>
                         {product.name}
                     </Typography>
                     <Typography variant='body2' align='right' color='textSecondary' 
-                                noWrap='true' dangerouslySetInnerHTML={{__html: product.description}}/>
+                                noWrap dangerouslySetInnerHTML={{__html: product.description}}/>
                     <Typography variant='h5' align='right' color='secondary'>
                         {product.price.formatted_with_symbol}
                     </Typography>
