@@ -1,13 +1,40 @@
-import React from 'react';
-import {AppBar, Toolbar, IconButton, Badge, Typography} from '@material-ui/core';
-import {ShoppingCart} from '@material-ui/icons';
+import React,{useState} from 'react';
+import {AppBar, Toolbar, IconButton, Badge, Typography, Menu, MenuItem} from '@material-ui/core';
+import {ShoppingCart, AccountCircle} from '@material-ui/icons';
 import useStyles from './styles';
 import logo from '../../assets/logo.png';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 const Navbar = ({totalItems}) => {
 
     const classes = useStyles();
+    const history = useHistory();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+      };
+
+      const handleProfileMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+
+    const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={()=>{handleMenuClose(); history.push('/stats');}}>Stats</MenuItem>
+    </Menu>
+  );
+
     return (
         <>
             <AppBar position='fixed' color='inherit' className={classes.appBar}>
@@ -23,9 +50,17 @@ const Navbar = ({totalItems}) => {
                                 <ShoppingCart/>
                             </Badge>
                         </IconButton>
+                        <IconButton edge='end' color="inherit" aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              >
+                            <AccountCircle/>
+                        </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>
+            {renderMenu}
         </>
     )
 }

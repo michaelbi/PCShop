@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import {commerce} from './lib/commerce';
-import {Navbar, Products, Cart, Checkout, ProductPage} from './Components';
+import {Navbar, Products, Cart, Checkout, ProductPage, Statistics} from './Components';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const App = () => {
@@ -89,6 +89,9 @@ const App = () => {
                     onCaptureCheckout={handleCaptureCheckout}
                     error={errorMessage}
                     />
+                </Route>
+                <Route exact path='/stats'>
+                    <Statistics />
                 </Route>
             </Switch>         
         </div>
