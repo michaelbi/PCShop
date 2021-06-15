@@ -139,9 +139,9 @@ const Statistics = () => {
       };
 
     return (
-        <Paper>
+        <Paper className={classes.fullSpace}>
             <Toolbar/>
-            <Grid container spacing={3} justify='center'>
+            <Grid container spacing={3} justify='center' className={classes.fullSpace}>
                 <Grid item xs={12} align="center">
                     <Card className={classes.root}>
                         <CardHeader 

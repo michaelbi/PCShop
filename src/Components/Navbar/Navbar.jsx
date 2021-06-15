@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import {AppBar, Toolbar, IconButton, Badge, Typography, Menu, MenuItem} from '@material-ui/core';
-import {ShoppingCart, AccountCircle} from '@material-ui/icons';
+import {ShoppingCart} from '@material-ui/icons';
+import MoreIcon from '@material-ui/icons/MoreVert';
 import useStyles from './styles';
 import logo from '../../assets/logo.png';
 import {Link, useHistory} from 'react-router-dom';
@@ -24,10 +25,10 @@ const Navbar = ({totalItems}) => {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -55,7 +56,7 @@ const Navbar = ({totalItems}) => {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               >
-                            <AccountCircle/>
+                            <MoreIcon/>
                         </IconButton>
                     </div>
                 </Toolbar>

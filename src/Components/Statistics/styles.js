@@ -7,6 +7,11 @@ export default makeStyles((theme)=>({
             maxWidth: '90%',
         },
         maxWidth: '80%',
+    },
+
+    fullSpace:{
+        flexGrow:1,
+        maxWidth: '100%',
     }
 
 }))

@@ -7,7 +7,6 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
     alignSelf: 'center',
-    margin: ' 0 auto',
     
   },
   media: {
