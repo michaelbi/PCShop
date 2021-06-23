@@ -117,7 +117,7 @@ const App = () => {
                         />
                     </Route>
                     <Route exact path='/stats'>
-                        <Statistics />
+                        <Statistics isAdmin={isAdmin}/>
                     </Route>
                     <Route path='/login'>
                         <Login handleLogIn={handleLogIn} handleLoginAdmin={handleLoginAdmin} />

@@ -13,7 +13,13 @@ import useStyles from "./styles";
 import logo from "../../assets/logo.png";
 import { Link, useHistory } from "react-router-dom";
 
-const Navbar = ({ totalItems, isLogged, handleLogOut, handleLogOutAdmin, isAdmin }) => {
+const Navbar = ({
+  totalItems,
+  isLogged,
+  handleLogOut,
+  handleLogOutAdmin,
+  isAdmin,
+}) => {
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,27 +78,27 @@ const Navbar = ({ totalItems, isLogged, handleLogOut, handleLogOutAdmin, isAdmin
             </MenuItem>,
           ]}
 
-          {isAdmin && (
-          [<MenuItem
-              key="stats"
-              onClick={() => {
-                handleMenuClose();
-                history.push("/stats");
-              }}
-            >
-              Statistics
-            </MenuItem>,
-            <MenuItem
-            key="logout"
-            onClick={() => {
-              handleMenuClose();
-              handleLogOutAdmin();
-              history.push("/");
-            }}
-          >
-            Logout
-          </MenuItem>
-            ])}
+      {isAdmin && [
+        <MenuItem
+          key="stats"
+          onClick={() => {
+            handleMenuClose();
+            history.push("/stats");
+          }}
+        >
+          Statistics
+        </MenuItem>,
+        <MenuItem
+          key="logout"
+          onClick={() => {
+            handleMenuClose();
+            handleLogOutAdmin();
+            history.push("/");
+          }}
+        >
+          Logout
+        </MenuItem>,
+      ]}
     </Menu>
   );
 
@@ -135,7 +141,9 @@ const Navbar = ({ totalItems, isLogged, handleLogOut, handleLogOutAdmin, isAdmin
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
             >
-              <AccountCircle />
+              <AccountCircle
+                color={isAdmin || isLogged ? "secondary" : "inherit"}
+              />
             </IconButton>
           </div>
         </Toolbar>

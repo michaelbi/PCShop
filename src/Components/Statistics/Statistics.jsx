@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Toolbar,
   Paper,
@@ -8,16 +9,16 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { ArrowUpward, ArrowDownward } from "@material-ui/icons";
 import { Pie, Line } from "react-chartjs-2";
 import useStyles from "./styles";
 
-const Statistics = () => {
+const Statistics = ({ isAdmin }) => {
   const [pieData, setPieData] = useState();
   const [dailySales, setdailySales] = useState();
   const [paid, setPaid] = useState("");
   const [refunded, setRefunded] = useState("");
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -151,7 +152,11 @@ const Statistics = () => {
       );
     };
 
-    getOrders();
+    if (isAdmin) {
+      getOrders();
+    } else {
+      history.push("/");
+    }
   }, []);
 
   const line_options = {
@@ -182,7 +187,7 @@ const Statistics = () => {
           <Card>
             <CardContent style={{ background: "#4caf50" }}>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ArrowUpwardIcon />
+                <ArrowUpward />
                 <div
                   style={{
                     display: "flex",
@@ -206,7 +211,7 @@ const Statistics = () => {
           <Card>
             <CardContent style={{ background: "#f44336" }}>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <ArrowDownwardIcon />
+                <ArrowDownward />
                 <div
                   style={{
                     display: "flex",
