@@ -10,12 +10,10 @@ import {
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import { useTheme } from "@material-ui/core/styles";
 import { Pie, Line } from "react-chartjs-2";
 import useStyles from "./styles";
 
 const Statistics = () => {
-  const theme = useTheme();
   const [pieData, setPieData] = useState();
   const [dailySales, setdailySales] = useState();
   const [paid, setPaid] = useState("");

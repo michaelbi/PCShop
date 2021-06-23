@@ -10,10 +10,7 @@ export default makeStyles((theme) => ({
     
   },
   media: {
-    // height: 0,
-    // paddingTop: '56.25%', // 16:9
-    height: 0,
-    padding:'50%',
+    paddingTop:'56.25%',
   },
   btn: {
       margin: '5px',
