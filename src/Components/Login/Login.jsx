@@ -37,27 +37,32 @@ const Login = ({ handleLogIn, handleLoginAdmin }) => {
 
   const handleSendEmail = async (data) => {
     setIsSent(true);
-    if(data.email === 'Admin'){
+    if (data.email === "Admin") {
       handleLoginAdmin();
-      history.push('/stats');
-    }
-    else
-    {
+      history.push("/stats");
+    } else {
       if (typeof window !== "undefined" && data.email) {
-        const token = await commerce.customer.login(
-          data.email,
-          `${window.location.protocol}//${window.location.host}/login/callback`
-        );
-  
-        setcToken(true);
-        console.log(token);
+        try {
+          const token = await commerce.customer.login(
+            data.email,
+            `${window.location.protocol}//${window.location.host}/login/callback`
+          );
+
+          setcToken(true);
+        } catch (error) {
+          setcToken(false);
+        }
       } else {
         // work out what you want to do server-side...
-  
+
         setcToken(false);
       }
     }
-    
+  };
+
+  const handleReset = () => {
+    setIsSent(false);
+    setcToken(undefined);
   };
 
   return (
@@ -116,14 +121,48 @@ const Login = ({ handleLogIn, handleLoginAdmin }) => {
                 </form>
               </FormProvider>
             ) : (
-              !cToken && <div style={{display:'flex', justifyContent:'center'}}><CircularProgress align='center'/></div>
+              !cToken && (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <CircularProgress align="center" />
+                </div>
+              )
             )}
 
             {cToken ? (
-              <Typography align='center'>Email Has Been Sent</Typography>
+              <Typography align="center" color="primary">
+                Email Has Been Sent
+              </Typography>
             ) : (
               typeof cToken !== "undefined" && (
-                <Typography align='center'>Error Try Again</Typography>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexFlow: "column nowrap",
+                  }}
+                >
+                  <Typography variant="h6" align="center" color="error">
+                    Error
+                  </Typography>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignSelf: "center",
+                      paddingTop: "20px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      align="center"
+                      type="button"
+                      onClick={handleReset}
+                    >
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
               )
             )}
           </>

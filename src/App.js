@@ -81,14 +81,17 @@ const App = () => {
     }
 
     const handleLoginAdmin = () => {
+        localStorage.setItem('p_admin', 'true');
         setIsAdmin(true);
     }
     const handleLogOutAdmin = () => {
+        localStorage.setItem('p_admin', 'false');
         setIsAdmin(false);
     }
 
     useEffect(() => {
         setIsLoggedIn(commerce.customer.isLoggedIn());
+        setIsAdmin(Boolean(localStorage.getItem('p_admin')));
         fetchProducts();
         fetchCart();
 
